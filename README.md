@@ -84,8 +84,6 @@ You can add more tests in `tests/test_recommender.py`.
 Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
 
 ```
-Loaded songs: 15
-
 Top Recommendations
 ===================
 
@@ -104,7 +102,60 @@ Top Recommendations
 5. Storm Runner (Score: 0.89)
    Reasons: energy similarity (+0.89)
 ```
+Top Recommendations
+===================
 
+1. Iron Collapse (Score: 2.13)
+   Reasons: genre match (+2.0), mood match (+1.0), energy similarity (+-0.87)
+
+2. Spacewalk Thoughts (Score: -0.18)
+   Reasons: energy similarity (+-0.18)
+
+3. Autumn Sonata (Score: -0.20)
+   Reasons: energy similarity (+-0.20)
+
+4. Library Rain (Score: -0.25)
+   Reasons: energy similarity (+-0.25)
+
+5. Coffee Shop Stories (Score: -0.27)
+   Reasons: energy similarity (+-0.27)
+```
+Top Recommendations
+===================
+
+1. Storm Runner (Score: 3.41)
+   Reasons: genre match (+2.0), mood match (+1.0), energy similarity (+0.41)
+
+2. Gym Hero (Score: 1.43)
+   Reasons: mood match (+1.0), energy similarity (+0.43)
+
+3. Iron Collapse (Score: 0.47)
+   Reasons: energy similarity (+0.47)
+
+4. Sunrise City (Score: 0.32)
+   Reasons: energy similarity (+0.32)
+
+5. Rooftop Lights (Score: 0.26)
+   Reasons: energy similarity (+0.26)
+```
+Top Recommendations
+===================
+
+1. Midnight Coding (Score: 3.98)
+   Reasons: genre match (+2.0), mood match (+1.0), energy similarity (+0.98)
+
+2. Library Rain (Score: 3.95)
+   Reasons: genre match (+2.0), mood match (+1.0), energy similarity (+0.95)
+
+3. Focus Flow (Score: 3.00)
+   Reasons: genre match (+2.0), energy similarity (+1.00)
+
+4. Spacewalk Thoughts (Score: 1.88)
+   Reasons: mood match (+1.0), energy similarity (+0.88)
+
+5. Coffee Shop Stories (Score: 0.97)
+   Reasons: energy similarity (+0.97)
+```
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
 
 ---
