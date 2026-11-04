@@ -149,6 +149,94 @@ TOP 5 RECOMMENDATIONS
    Because: related genre (indie pop); energy close to target (0.76 vs 0.92); danceability close to target (0.82 vs 0.8); tempo close to target (124 vs 140)
 ```
 
+```
+============================================================
+USER PROFILE: Chill study (lofi/ambient/jazz)
+============================================================
+  Genres        lofi, ambient
+  Moods         chill, focused
+  Energy        0.4
+  Valence       0.6
+  Acousticness  0.8
+  Tempo         80
+
+TOP 5 RECOMMENDATIONS
+------------------------------------------------------------
+1. Focus Flow - LoRoom
+   lofi / focused   Score: 1.00
+   Because: genre match (lofi); mood match (focused); energy close to target (0.4 vs 0.4); valence close to target (0.59 vs 0.6); tempo close to target (80 vs 80); acousticness close to target (0.78 vs 0.8)
+2. Library Rain - Paper Lanterns
+   lofi / chill   Score: 0.98
+   Because: genre match (lofi); mood match (chill); energy close to target (0.35 vs 0.4); valence close to target (0.6 vs 0.6); tempo close to target (72 vs 80); acousticness close to target (0.86 vs 0.8)
+3. Midnight Coding - LoRoom
+   lofi / chill   Score: 0.98
+   Because: genre match (lofi); mood match (chill); energy close to target (0.42 vs 0.4); valence close to target (0.56 vs 0.6); tempo close to target (78 vs 80); acousticness close to target (0.71 vs 0.8)
+4. Spacewalk Thoughts - Orbit Bloom
+   ambient / chill   Score: 0.95
+   Because: genre match (ambient); mood match (chill); energy close to target (0.28 vs 0.4); valence close to target (0.65 vs 0.6); tempo close to target (60 vs 80); acousticness close to target (0.92 vs 0.8)
+5. Coffee Shop Stories - Slow Stereo
+   jazz / relaxed   Score: 0.75
+   Because: related genre (jazz); related mood (relaxed); energy close to target (0.37 vs 0.4); valence close to target (0.71 vs 0.6); tempo close to target (90 vs 80); acousticness close to target (0.89 vs 0.8)
+```
+
+```
+============================================================
+USER PROFILE: Intense workout (rock + pop)
+============================================================
+  Genres        rock, pop
+  Moods         intense
+  Energy        0.92
+  Danceability  0.8
+  Acousticness  0.1
+  Tempo         140
+
+TOP 5 RECOMMENDATIONS
+------------------------------------------------------------
+1. Gym Hero - Max Pulse
+   pop / intense   Score: 0.98
+   Because: genre match (pop); mood match (intense); energy close to target (0.93 vs 0.92); danceability close to target (0.88 vs 0.8); tempo close to target (132 vs 140); acousticness close to target (0.05 vs 0.1)
+2. Storm Runner - Voltline
+   rock / intense   Score: 0.98
+   Because: genre match (rock); mood match (intense); energy close to target (0.91 vs 0.92); danceability close to target (0.66 vs 0.8); tempo close to target (152 vs 140); acousticness close to target (0.1 vs 0.1)
+3. Neon Pulse Festival - Voltage Kid
+   edm / euphoric   Score: 0.75
+   Because: related genre (edm); related mood (euphoric); energy close to target (0.96 vs 0.92); danceability close to target (0.93 vs 0.8); tempo close to target (128 vs 140); acousticness close to target (0.03 vs 0.1)
+4. Sunrise City - Neon Echo
+   pop / happy   Score: 0.75
+   Because: genre match (pop); energy close to target (0.82 vs 0.92); danceability close to target (0.79 vs 0.8); tempo close to target (118 vs 140); acousticness close to target (0.18 vs 0.1)
+5. Rooftop Lights - Indigo Parade
+   indie pop / happy   Score: 0.58
+   Because: related genre (indie pop); energy close to target (0.76 vs 0.92); danceability close to target (0.82 vs 0.8); tempo close to target (124 vs 140)
+```
+
+```
+============================================================
+USER PROFILE: Rainy-day wind down (folk/classical)
+============================================================
+  Genres        folk, classical
+  Moods         nostalgic, sad
+  Energy        0.3
+  Valence       0.4
+  Acousticness  0.92
+
+TOP 5 RECOMMENDATIONS
+------------------------------------------------------------
+1. Rain on Old Piano - Clara Voss
+   classical / sad   Score: 0.95
+   Because: genre match (classical); mood match (sad); energy close to target (0.18 vs 0.3); valence close to target (0.22 vs 0.4); acousticness close to target (0.97 vs 0.92)
+2. Porch Light Hymn - Willow & Pine
+   folk / nostalgic   Score: 0.95
+   Because: genre match (folk); mood match (nostalgic); energy close to target (0.45 vs 0.3); valence close to target (0.58 vs 0.4); acousticness close to target (0.91 vs 0.92)
+3. Spacewalk Thoughts - Orbit Bloom
+   ambient / chill   Score: 0.61
+   Because: related genre (ambient); energy close to target (0.28 vs 0.3); acousticness close to target (0.92 vs 0.92)
+4. Velvet Hours - Amber Lane
+   r&b / romantic   Score: 0.44
+   Because: related mood (romantic)
+5. Rooftop Lights - Indigo Parade
+   indie pop / happy   Score: 0.43
+   Because: related genre (indie pop)
+```
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
 
 ---

@@ -29,6 +29,13 @@ PROFILES = {
         "target_danceability": 0.80,
         "target_acousticness": 0.10,
     },
+    "Rainy-day wind down (folk/classical)": {
+        "favorite_genres": ["folk", "classical"],
+        "favorite_moods": ["nostalgic", "sad"],
+        "target_energy": 0.30,
+        "target_valence": 0.40,
+        "target_acousticness": 0.92,
+    },
 }
 
 
@@ -39,6 +46,7 @@ PROFILE_LABELS = {
     "target_valence": "Valence",
     "target_danceability": "Danceability",
     "target_acousticness": "Acousticness",
+    "target_tempo": "Tempo",
 }
 
 

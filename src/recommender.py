@@ -78,8 +78,21 @@ def _proximity(value: float, target: float, scale: float = 1.0) -> float:
     return max(0.0, 1.0 - abs(value - target) / scale)
 
 
+def _norm(value: str) -> str:
+    """Lowercases and trims a genre/mood so 'Lofi ' matches 'lofi'."""
+    return str(value).strip().lower()
+
+
+def _clamp_target(target: Optional[float]) -> Optional[float]:
+    """Pulls a 0-1 feature target back into range; None passes through."""
+    if target is None:
+        return None
+    return min(1.0, max(0.0, target))
+
+
 def _category_match(value: str, favorites: List[str], related: set) -> float:
     """1.0 for an exact match, partial credit for a related value, else 0."""
+    value = _norm(value)
     if value in favorites:
         return 1.0
     if any(frozenset((value, f)) in related for f in favorites):
@@ -88,12 +101,12 @@ def _category_match(value: str, favorites: List[str], related: set) -> float:
 
 
 def _favorites(prefs: Dict, plural: str, singular: str) -> List[str]:
-    """Returns the user's preferred values as a list, from the plural key or else the singular one."""
+    """Returns the user's preferred values as a normalized list, from the plural key or else the singular one."""
     values = prefs.get(plural)
     if values:
-        return list(values)
+        return [_norm(v) for v in values]
     single = prefs.get(singular)
-    return [single] if single else []
+    return [_norm(single)] if single else []
 
 
 def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
@@ -117,11 +130,11 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
         target_acoustic = 0.8 if user_prefs["likes_acoustic"] else 0.2
 
     numeric = [
-        ("energy", user_prefs.get("target_energy"), song["energy"], 1.0),
-        ("valence", user_prefs.get("target_valence"), song["valence"], 1.0),
-        ("danceability", user_prefs.get("target_danceability"), song["danceability"], 1.0),
+        ("energy", _clamp_target(user_prefs.get("target_energy")), song["energy"], 1.0),
+        ("valence", _clamp_target(user_prefs.get("target_valence")), song["valence"], 1.0),
+        ("danceability", _clamp_target(user_prefs.get("target_danceability")), song["danceability"], 1.0),
         ("tempo", user_prefs.get("target_tempo"), song["tempo_bpm"], TEMPO_RANGE),
-        ("acousticness", target_acoustic, song["acousticness"], 1.0),
+        ("acousticness", _clamp_target(target_acoustic), song["acousticness"], 1.0),
     ]
     for name, target, value, scale in numeric:
         if target is None:
@@ -129,11 +142,17 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
         m = _proximity(value, target, scale)
         parts.append((name, m, f"{name} close to target ({value:g} vs {target:g})" if m >= 0.8 else ""))
 
-    total_weight = sum(WEIGHTS[name] for name, _, _ in parts)
-    if total_weight == 0:
+    if not parts:
         return 0.0, ["no preferences specified"]
 
-    score = sum(WEIGHTS[name] * m for name, m, _ in parts) / total_weight
+    weights = {name: WEIGHTS[name] for name, _, _ in parts}
+    total_weight = sum(weights.values())
+    if total_weight == 0:
+        # Only zero-weight features were given (e.g. tempo alone): weigh them equally.
+        weights = {name: 1.0 for name in weights}
+        total_weight = float(len(weights))
+
+    score = sum(weights[name] * m for name, m, _ in parts) / total_weight
     reasons = [r for _, _, r in parts if r]
     return score, reasons or ["weak match on every feature"]
 
