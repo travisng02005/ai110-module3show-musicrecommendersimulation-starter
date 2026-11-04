@@ -12,22 +12,63 @@ You will implement the functions in recommender.py:
 from recommender import load_songs, recommend_songs
 
 
+PROFILES = {
+    "Chill study (lofi/ambient/jazz)": {
+        "favorite_genres": ["lofi", "ambient"],
+        "favorite_moods": ["chill", "focused"],
+        "target_energy": 0.40,
+        "target_valence": 0.60,
+        "target_tempo": 80,
+        "target_acousticness": 0.80,
+    },
+    "Intense workout (rock + pop)": {
+        "favorite_genres": ["rock", "pop"],
+        "favorite_moods": ["intense"],
+        "target_energy": 0.92,
+        "target_tempo": 140,
+        "target_danceability": 0.80,
+        "target_acousticness": 0.10,
+    },
+}
+
+
+PROFILE_LABELS = {
+    "favorite_genres": "Genres",
+    "favorite_moods": "Moods",
+    "target_energy": "Energy",
+    "target_valence": "Valence",
+    "target_danceability": "Danceability",
+    "target_acousticness": "Acousticness",
+}
+
+
+def print_profile(name: str, user_prefs: dict) -> None:
+    print(f"\n{'=' * 60}")
+    print(f"USER PROFILE: {name}")
+    print("=" * 60)
+    for key, label in PROFILE_LABELS.items():
+        value = user_prefs.get(key)
+        if value is None:
+            continue
+        shown = ", ".join(value) if isinstance(value, list) else f"{value:g}"
+        print(f"  {label:<14}{shown}")
+
+
+def print_recommendations(recommendations: list) -> None:
+    print(f"\nTOP {len(recommendations)} RECOMMENDATIONS")
+    print("-" * 60)
+    for rank, (song, score, explanation) in enumerate(recommendations, start=1):
+        print(f"{rank}. {song['title']} - {song['artist']}")
+        print(f"   {song['genre']} / {song['mood']}   Score: {score:.2f}")
+        print(f"   Because: {explanation}")
+
+
 def main() -> None:
-    songs = load_songs("data/songs.csv") 
+    songs = load_songs("data/songs.csv")
 
-    # Starter example profile
-    user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8}
-
-    recommendations = recommend_songs(user_prefs, songs, k=5)
-
-    print("\nTop recommendations:\n")
-    for rec in recommendations:
-        # You decide the structure of each returned item.
-        # A common pattern is: (song, score, explanation)
-        song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
-        print()
+    for name, user_prefs in PROFILES.items():
+        print_profile(name, user_prefs)
+        print_recommendations(recommend_songs(user_prefs, songs, k=5))
 
 
 if __name__ == "__main__":

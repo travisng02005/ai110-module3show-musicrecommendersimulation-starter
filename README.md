@@ -29,6 +29,56 @@ Some prompts to answer:
 
 You can include a simple diagram or bullet list if helpful.
 
+Real-world recommendations are currated through signals such as likes, dislikes, which songs you skip, how the song is categorized, etc. My version will prioritize how the song sounds such as the bass and vibe.
+
+Song features:
+- id, title, artist
+- genre
+- mood
+- energy
+- acousticness
+- tempo_bpm
+- valence
+- danceability
+UserProfile Features:
+- favorite_genre
+- favorite_mood
+- target_energy
+- likes_acoustic
+
+- Strategy: Normalized weights summing to 1 (#2) as the baseline, e.g. genre 0.30, mood 0.20, energy 0.20, valence/danceability/acousticness 0.10 each.
+- Input: Load the 15 songs from songs.csv and take a user profile (target genre, mood, energy and so on).
+Scoring:
+- - Categorical features (genre, mood) get a match score.
+- - Numeric features get 1 - |song - target|.
+- - Multiply each by its weight and sum to one score in [0, 1].
+- Output: Sort by score descending, return the top K (about 5) with a short reason for each.
+- Experiments to compare later:
+- - #3: energy-first weights.
+- - #5: tiered mood similarity.
+- - Optionally #6: a diversity penalty.
+- Design choice: Keep weights in a single dict so strategies can be swapped without touching the scoring logic.
+- Deliverable angle: Compare how the top 5 changes between weight sets, as a model-card discussion point.
+
+Feature	Weight
+genre	0.30
+mood	0.20
+energy	0.20
+valence	0.10
+danceability	0.10
+acousticness	0.10
+
+Potential Biases
+- Genre dominance: At 0.30, a genre match can outrank a closer vibe match from another genre.
+- Tiny catalog skew: 15 songs means many genres have exactly one entry (jazz, folk, r&b, edm, classical). A user wanting those gets one good result, then filler.
+- Lofi overrepresentation: Three lofi songs (plus similar chill ones) will crowd the top 5 for anyone near low energy, which is a filter-bubble effect.
+- Exact-match mood brittleness: Rare moods (romantic, euphoric, nostalgic) match only one song, so those users are underserved.
+- Linear distance bias: 1 - |diff| gives generous credit to mediocre numeric matches and compresses the score range, so rankings can hinge on small differences.
+- Mid-range target advantage: Users with targets near 0.5 are close to many songs, so they get inflated scores. Users at extremes (very high or very low energy) have fewer close options.
+- Equal numeric weighting: Valence, danceability and acousticness are treated as equally important for everyone, though they matter differently per listener.
+- Designer bias: The weights and the mood-similarity table are my choices, not learned from listening data, so they encode assumptions about what "similar" means.
+- Artist repeats: LoRoom and Neon Echo each have multiple songs, so they can dominate without a diversity penalty.
+- No feedback loop: The system never learns from skips or likes, so any bias in the weights persists.
 ---
 
 ## Getting Started
@@ -71,12 +121,32 @@ You can add more tests in `tests/test_recommender.py`.
 Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
 
 ```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
+============================================================
+USER PROFILE: Intense workout (rock + pop)
+============================================================
+  Genres        rock, pop
+  Moods         intense
+  Energy        0.92
+  Danceability  0.8
+  Acousticness  0.1
+
+TOP 5 RECOMMENDATIONS
+------------------------------------------------------------
+1. Gym Hero - Max Pulse
+   pop / intense   Score: 0.98
+   Because: genre match (pop); mood match (intense); energy close to target (0.93 vs 0.92); danceability close to target (0.88 vs 0.8); tempo close to target (132 vs 140); acousticness close to target (0.05 vs 0.1)
+2. Storm Runner - Voltline
+   rock / intense   Score: 0.98
+   Because: genre match (rock); mood match (intense); energy close to target (0.91 vs 0.92); danceability close to target (0.66 vs 0.8); tempo close to target (152 vs 140); acousticness close to target (0.1 vs 0.1)
+3. Neon Pulse Festival - Voltage Kid
+   edm / euphoric   Score: 0.75
+   Because: related genre (edm); related mood (euphoric); energy close to target (0.96 vs 0.92); danceability close to target (0.93 vs 0.8); tempo close to target (128 vs 140); acousticness close to target (0.03 vs 0.1)
+4. Sunrise City - Neon Echo
+   pop / happy   Score: 0.75
+   Because: genre match (pop); energy close to target (0.82 vs 0.92); danceability close to target (0.79 vs 0.8); tempo close to target (118 vs 140); acousticness close to target (0.18 vs 0.1)
+5. Rooftop Lights - Indigo Parade
+   indie pop / happy   Score: 0.58
+   Because: related genre (indie pop); energy close to target (0.76 vs 0.92); danceability close to target (0.82 vs 0.8); tempo close to target (124 vs 140)
 ```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
